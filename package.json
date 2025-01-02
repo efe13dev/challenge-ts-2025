@@ -2,10 +2,15 @@
   "name": "challenges-ts-2025",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "lint": "eslint . ",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@types/bun": "latest",
     "eslint": "^9.17.0",
+    "eslint-config-love": "^114.0.0",
     "globals": "^15.14.0",
     "typescript-eslint": "^8.19.0"
   },

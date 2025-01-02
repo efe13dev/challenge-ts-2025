@@ -1,26 +1,25 @@
-import globals from 'globals';
-import pluginJs from '@eslint/js';
-import tseslint from 'typescript-eslint';
-
-/** @type {import('eslint').Linter.Config[]} */
+import love from 'eslint-config-love';
 
 export default [
-  { files: ['**/*.{js,mjs,cjs,ts}'] },
-  { languageOptions: { globals: globals.node } },
-  pluginJs.configs.recommended,
-  ...tseslint.configs.stylistic,
+  love,
+  {
+    files: ['**/*.ts'],
+    rules: {
+      'no-magic-numbers': 'off',
+      '@typescript-eslint/no-magic-numbers': 'off',
+      'no-console': 'warn',
+      '@typescript-eslint/prefer-destructuring': [
+        'error',
+        { object: true, array: false }
+      ]
+    }
+  },
   {
     languageOptions: {
       parserOptions: {
         project: true,
         tsconfigDirName: import.meta.dirname
       }
-    }
-  },
-  {
-    rules: {
-      'no-console': 'warn',
-      semi: ['error']
     }
   }
 ];
