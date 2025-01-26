@@ -8,12 +8,12 @@ export function stockList(listOfArt: string[], listOfCat: string[]): string {
 	const categoryTotals: Record<string, number> = {};
 
 	// Inicializar todas las categorías solicitadas con 0
-	listOfCat.forEach((cat) => {
+	for (const cat of listOfCat) {
 		categoryTotals[cat] = 0;
-	});
+	}
 
 	// Sumar los libros para cada categoría
-	listOfArt.forEach((item) => {
+	for (const item of listOfArt) {
 		const [code, quantityStr] = item.split(" ");
 		const category = code[0]; // Primera letra del código
 		const quantity = Number.parseInt(quantityStr);
@@ -22,7 +22,7 @@ export function stockList(listOfArt: string[], listOfCat: string[]): string {
 		if (category in categoryTotals) {
 			categoryTotals[category] += quantity;
 		}
-	});
+	}
 
 	// Construir el string de resultado
 	return listOfCat
