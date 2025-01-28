@@ -1,9 +1,9 @@
 export function mirror(text: string): string {
 	const words = text.split(' ');
-	const reversedWords = words.map(word => word.split('').reverse().join(''));
-	
+	const reversedWords = words.map((word) => word.split('').reverse().join(''));
+
 	// Encontrar la palabra más larga para determinar el ancho del marco
-	const maxLength = Math.max(...reversedWords.map(word => word.length));
+	const maxLength = Math.max(...reversedWords.map((word) => word.length));
 	const frameWidth = maxLength + 4; // 2 espacios + 2 asteriscos
 
 	// Crear el marco superior e inferior
@@ -16,9 +16,5 @@ export function mirror(text: string): string {
 	});
 
 	// Unir todas las partes
-	return [
-		horizontalFrame,
-		...mirroredLines,
-		horizontalFrame,
-	].join('\n');
+	return [horizontalFrame, ...mirroredLines, horizontalFrame].join('\n');
 }

@@ -16,7 +16,7 @@ export function mean(lst: string[]): [number, string] {
 	const media = numeros.reduce((sum, num) => sum + num, 0) / numeros.length;
 
 	// Unir los caracteres en una sola cadena
-	const cadenaCaracteres = caracteres.join("");
+	const cadenaCaracteres = caracteres.join('');
 
 	return [media, cadenaCaracteres];
 }
