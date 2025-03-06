@@ -1,154 +1,142 @@
-class ElectricGarageDoor {
-  position = 0;
-  direction = 1; // 1 for opening, -1 for closing
-  state: DoorState = new ClosedState(this);
+// Tipos de estados
+type DoorState = 'CLOSED' | 'OPENING' | 'OPEN' | 'CLOSING';
 
-  handleButtonPress(): void {
-    this.state.handleButtonPress();
-  }
-
-  handleObstacleDetection(): void {
-    this.state.handleObstacleDetection();
-  }
-
-  updatePosition(): void {
-    this.state.updatePosition();
-  }
-
-  setPosition(position: number): void {
-    this.position = position;
-  }
-
-  setDirection(direction: number): void {
-    this.direction = direction;
-  }
-
-  setState(state: DoorState): void {
-    this.state = state;
-  }
+// Interfaz para el estado de la puerta
+interface GarageDoorState {
+  position: number;
+  direction: number; // 1 para abrir, -1 para cerrar
+  state: DoorState;
+  paused: boolean;
 }
 
-interface DoorState {
-  handleButtonPress(): void;
-  handleObstacleDetection(): void;
-  updatePosition(): void;
-}
+// Estado inicial de la puerta
+const initialState = (): GarageDoorState => ({
+  position: 0,
+  direction: 1,
+  state: 'CLOSED',
+  paused: false
+});
 
-// estado fechado, seta a posição pra 0 (fechado) e so tem mudança pro estado abrindo
-class ClosedState implements DoorState {
-  constructor(private door: ElectricGarageDoor) {}
+// Función para manejar el botón
+const handleButtonPress = (doorState: GarageDoorState): GarageDoorState => {
+  switch (doorState.state) {
+    case 'CLOSED':
+      return {
+        ...doorState,
+        state: 'OPENING',
+        direction: 1
+      };
+    case 'OPENING':
+      return {
+        ...doorState,
+        paused: !doorState.paused
+      };
+    case 'OPEN':
+      return {
+        ...doorState,
+        state: 'CLOSING',
+        direction: -1
+      };
+    case 'CLOSING':
+      return {
+        ...doorState,
+        paused: !doorState.paused
+      };
+    default:
+      return doorState;
+  }
+};
 
-  handleButtonPress(): void {
-    this.door.setState(new OpeningState(this.door));
+// Función para manejar la detección de obstáculos
+const handleObstacleDetection = (doorState: GarageDoorState): GarageDoorState => {
+  switch (doorState.state) {
+    case 'OPENING':
+      return {
+        ...doorState,
+        state: 'CLOSING',
+        direction: -1,
+        paused: false
+      };
+    case 'CLOSING':
+      return {
+        ...doorState,
+        state: 'OPENING',
+        direction: 1,
+        paused: false
+      };
+    default:
+      return doorState;
+  }
+};
+
+// Función para actualizar la posición
+const updatePosition = (doorState: GarageDoorState): GarageDoorState => {
+  if (doorState.paused) {
+    return doorState;
   }
 
-  handleObstacleDetection(): void {
-    // no effect
-  }
-
-  updatePosition(): void {
-    this.door.setPosition(0);
-  }
-}
-
-// estado abrindo, inicia não pausado e com os segundo zerados, quando pausado, muda o estado pra pausado e n da update na posição, quando não pausado ele aumenta os segundos em 1 e seta a posição dos segundos para 1, quando os segundos estão em 5, eme muda de estado para aberto. Ele também detecta se há um obstaculo e inverte o sentdido de acordo com isso
-class OpeningState implements DoorState {
-  private seconds = 0;
-  private paused = false;
-
-  constructor(private door: ElectricGarageDoor) {}
-
-  handleButtonPress(): void {
-    if (this.paused) {
-      this.paused = false;
-    } else {
-      this.paused = true;
-    }
-  }
-
-  handleObstacleDetection(): void {
-    this.door.setDirection(-1); // reverse direction
-    this.door.setState(new ClosingState(this.door));
-  }
-
-  updatePosition(): void {
-    if (!this.paused) {
-      this.seconds = this.door.position;
-      this.seconds++;
-      this.door.setPosition(this.seconds);
-      if (this.seconds === 5) {
-        this.door.setState(new OpenState(this.door));
+  switch (doorState.state) {
+    case 'CLOSED':
+      return {
+        ...doorState,
+        position: 0
+      };
+    case 'OPENING': {
+      const newPosition = doorState.position + 1;
+      if (newPosition === 5) {
+        return {
+          ...doorState,
+          position: 5,
+          state: 'OPEN'
+        };
       }
+      return {
+        ...doorState,
+        position: newPosition
+      };
     }
-  }
-}
-
-// Estado aberto, quando o botão é pressionado ela muda para o estado fechando, quando ele encontra um obstaculo muda a direção e o estado para fechando, sempre seta a posição para 5
-class OpenState implements DoorState {
-  constructor(private door: ElectricGarageDoor) {}
-
-  handleButtonPress(): void {
-    this.door.setState(new ClosingState(this.door));
-  }
-
-  handleObstacleDetection(): void {
-    this.door.setDirection(-1); // reverse direction
-    this.door.setState(new ClosingState(this.door));
-  }
-
-  updatePosition(): void {
-    this.door.setPosition(5);
-  }
-}
-
-// Estado Fechando, sempre seta os segundos para 0 e inicia despausado, ao encontrar um obstaculo ele seta a direção para 1 e muda o estado para abrindo, caso não esteja despausado ele vai aumentar os segundo alterar a posição para 5 - segundos e caso os segundos cheguem a 5, ele vai mudar o estado para fechado
-class ClosingState implements DoorState {
-  private seconds = 5;
-  private paused = false;
-
-  constructor(private door: ElectricGarageDoor) {}
-
-  handleButtonPress(): void {
-    if (this.paused) {
-      this.paused = false;
-    } else {
-      this.paused = true;
-    }
-  }
-
-  handleObstacleDetection(): void {
-    this.door.setDirection(1); // reverse direction
-    this.door.setState(new OpeningState(this.door));
-  }
-
-  updatePosition(): void {
-    if (!this.paused) {
-      this.seconds = this.door.position;
-      this.seconds--;
-      this.door.setPosition(this.seconds);
-      if (this.seconds === 0) {
-        this.door.setState(new ClosedState(this.door));
+    case 'OPEN':
+      return {
+        ...doorState,
+        position: 5
+      };
+    case 'CLOSING': {
+      const newPosition = doorState.position - 1;
+      if (newPosition === 0) {
+        return {
+          ...doorState,
+          position: 0,
+          state: 'CLOSED'
+        };
       }
+      return {
+        ...doorState,
+        position: newPosition
+      };
     }
+    default:
+      return doorState;
   }
-}
+};
 
+// Función principal que procesa los eventos
 export function door(input: string): string {
-  const garageDoor = new ElectricGarageDoor();
+  let doorState = initialState();
   let output = '';
   let lastPosition = -1; // Para rastrear la última posición
 
-  for (let i = 0; i < input.length; i++) {
-    const event = input[i];
+  for (const event of input) {
     if (event === 'P') {
-      garageDoor.handleButtonPress();
+      doorState = handleButtonPress(doorState);
     } else if (event === 'O') {
-      garageDoor.handleObstacleDetection();
+      doorState = handleObstacleDetection(doorState);
     }
-    garageDoor.updatePosition();
-    if (garageDoor.position > 0 && garageDoor.position !== lastPosition) {
-      output += garageDoor.position;
-      lastPosition = garageDoor.position;
+    
+    doorState = updatePosition(doorState);
+    
+    if (doorState.position > 0 && doorState.position !== lastPosition) {
+      output += doorState.position;
+      lastPosition = doorState.position;
     }
   }
 
