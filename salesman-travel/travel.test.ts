@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { travel } from './travel';
+import { travel } from './travel.ts';
 
 describe('Travel', () => {
   const addresses =
