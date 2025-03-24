@@ -14,7 +14,7 @@ const initialState = (): GarageDoorState => ({
   position: 0,
   direction: 1,
   state: 'CLOSED',
-  paused: false
+  paused: false,
 });
 
 // Función para manejar el botón
@@ -24,23 +24,23 @@ const handleButtonPress = (doorState: GarageDoorState): GarageDoorState => {
       return {
         ...doorState,
         state: 'OPENING',
-        direction: 1
+        direction: 1,
       };
     case 'OPENING':
       return {
         ...doorState,
-        paused: !doorState.paused
+        paused: !doorState.paused,
       };
     case 'OPEN':
       return {
         ...doorState,
         state: 'CLOSING',
-        direction: -1
+        direction: -1,
       };
     case 'CLOSING':
       return {
         ...doorState,
-        paused: !doorState.paused
+        paused: !doorState.paused,
       };
     default:
       return doorState;
@@ -48,21 +48,23 @@ const handleButtonPress = (doorState: GarageDoorState): GarageDoorState => {
 };
 
 // Función para manejar la detección de obstáculos
-const handleObstacleDetection = (doorState: GarageDoorState): GarageDoorState => {
+const handleObstacleDetection = (
+  doorState: GarageDoorState,
+): GarageDoorState => {
   switch (doorState.state) {
     case 'OPENING':
       return {
         ...doorState,
         state: 'CLOSING',
         direction: -1,
-        paused: false
+        paused: false,
       };
     case 'CLOSING':
       return {
         ...doorState,
         state: 'OPENING',
         direction: 1,
-        paused: false
+        paused: false,
       };
     default:
       return doorState;
@@ -79,7 +81,7 @@ const updatePosition = (doorState: GarageDoorState): GarageDoorState => {
     case 'CLOSED':
       return {
         ...doorState,
-        position: 0
+        position: 0,
       };
     case 'OPENING': {
       const newPosition = doorState.position + 1;
@@ -87,18 +89,18 @@ const updatePosition = (doorState: GarageDoorState): GarageDoorState => {
         return {
           ...doorState,
           position: 5,
-          state: 'OPEN'
+          state: 'OPEN',
         };
       }
       return {
         ...doorState,
-        position: newPosition
+        position: newPosition,
       };
     }
     case 'OPEN':
       return {
         ...doorState,
-        position: 5
+        position: 5,
       };
     case 'CLOSING': {
       const newPosition = doorState.position - 1;
@@ -106,12 +108,12 @@ const updatePosition = (doorState: GarageDoorState): GarageDoorState => {
         return {
           ...doorState,
           position: 0,
-          state: 'CLOSED'
+          state: 'CLOSED',
         };
       }
       return {
         ...doorState,
-        position: newPosition
+        position: newPosition,
       };
     }
     default:
@@ -131,9 +133,9 @@ export function door(input: string): string {
     } else if (event === 'O') {
       doorState = handleObstacleDetection(doorState);
     }
-    
+
     doorState = updatePosition(doorState);
-    
+
     if (doorState.position > 0 && doorState.position !== lastPosition) {
       output += doorState.position;
       lastPosition = doorState.position;
