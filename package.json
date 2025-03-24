@@ -2,10 +2,7 @@
   "name": "challenges-ts-2025",
   "module": "index.ts",
   "type": "module",
-  "scripts": {
-    "lint": "eslint . ",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix"
-  },
+  "scripts": {},
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/bun": "latest",
