@@ -1,0 +1,1 @@
+Devuelve el tipo de la suma de los dos argumentos
