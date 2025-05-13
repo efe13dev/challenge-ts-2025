@@ -1,4 +1,4 @@
-import { heavyMetalUmlauts } from "./heavyMetal";
+import { heavyMetalUmlauts } from "./heavyMetal.ts";
 
 import { test, expect } from "bun:test";
 
