@@ -3,7 +3,7 @@ export function uniqueInOrder<T>(sequence: string | T[]): T[] {
     return [];
   }
 
-  const arr = typeof sequence === 'string' ? sequence.split('') : sequence;
+  const arr = typeof sequence === "string" ? sequence.split("") : sequence;
   const result: T[] = [];
 
   for (let i = 0; i < arr.length; i++) {

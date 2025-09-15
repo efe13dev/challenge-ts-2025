@@ -3,8 +3,8 @@ export function lineupStudents(students: string): string[] {
   return (
     students
       .trim()
-      .split(' ')
-      .filter((name) => name !== '')
+      .split(" ")
+      .filter((name) => name !== "")
       // Ordenar los nombres según los criterios:
       // 1. Por longitud en orden descendente
       // 2. Alfabéticamente en reversa (Z->A) para nombres de igual longitud
@@ -13,6 +13,7 @@ export function lineupStudents(students: string): string[] {
         if (a.length !== b.length) {
           return b.length - a.length;
         }
+
         // Si las longitudes son iguales, ordenar alfabéticamente en reversa
         return b.localeCompare(a);
       })

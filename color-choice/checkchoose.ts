@@ -3,9 +3,11 @@ export function checkchoose(m: number, n: number): number {
     if (k < 0 || k > n) return 0;
     if (k === 0 || k === n) return 1;
     let res = 1;
+
     for (let i = 1; i <= k; i++) {
-      res = res * (n - i + 1) / i;
+      res = (res * (n - i + 1)) / i;
     }
+
     return res;
   }
   for (let x = 1; x <= n; x++) {
@@ -13,5 +15,6 @@ export function checkchoose(m: number, n: number): number {
       return x;
     }
   }
+
   return -1;
 }

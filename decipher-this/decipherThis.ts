@@ -3,13 +3,14 @@ const asciiRegex = /^\d+/;
 
 export function decipherThis(str: string): string {
   if (!str) {
-    return '';
+    return "";
   }
 
   return str
-    .split(' ')
+    .split(" ")
     .map((word) => {
       const match = word.match(asciiRegex);
+
       if (!match) {
         return word;
       }
@@ -19,14 +20,16 @@ export function decipherThis(str: string): string {
 
       // Si hay al menos 2 letras en el resto, intercambiar el segundo y último carácter
       if (rest.length > 1) {
-        const chars = rest.split('');
+        const chars = rest.split("");
         // Intercambiar segundo y último carácter
         const temp = chars[0];
+
         chars[0] = chars[chars.length - 1];
         chars[chars.length - 1] = temp;
-        rest = chars.join('');
+        rest = chars.join("");
       }
+
       return firstChar + rest;
     })
-    .join(' ');
+    .join(" ");
 }

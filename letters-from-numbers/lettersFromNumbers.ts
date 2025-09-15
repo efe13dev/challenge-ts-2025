@@ -3,7 +3,5 @@ export function convert(n: string): string {
   const pairs = n.match(/.{2}/g) || [];
 
   // Convertir cada par de números en su correspondiente carácter ASCII
-  return pairs
-    .map((pair) => String.fromCharCode(Number.parseInt(pair)))
-    .join('');
+  return pairs.map((pair) => String.fromCharCode(Number.parseInt(pair))).join("");
 }

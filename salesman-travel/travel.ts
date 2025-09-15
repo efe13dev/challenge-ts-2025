@@ -5,7 +5,7 @@ export function travel(r: string, zipcode: string): string {
   }
 
   // Dividir la cadena de entrada en un array de direcciones
-  const addresses = r.split(',');
+  const addresses = r.split(",");
 
   // Arrays para almacenar las calles y los números de casa
   const streets: string[] = [];
@@ -16,7 +16,7 @@ export function travel(r: string, zipcode: string): string {
     // Verificar si la dirección contiene el código postal buscado
     if (address.endsWith(zipcode)) {
       // Obtener el primer espacio para separar el número de casa
-      const firstSpaceIndex = address.indexOf(' ');
+      const firstSpaceIndex = address.indexOf(" ");
 
       if (firstSpaceIndex !== -1) {
         // Extraer el número de casa (todo antes del primer espacio)
@@ -41,5 +41,5 @@ export function travel(r: string, zipcode: string): string {
   }
 
   // Construir la cadena de resultado en el formato requerido
-  return `${zipcode}:${streets.join(',')}/${houseNumbers.join(',')}`;
+  return `${zipcode}:${streets.join(",")}/${houseNumbers.join(",")}`;
 }

@@ -1,5 +1,6 @@
-import { checkchoose } from "./checkchoose";
 import { describe, expect, it } from "bun:test";
+
+import { checkchoose } from "./checkchoose";
 
 describe("checkchoose", () => {
   it("debe devolver 2 para m=6, n=4", () => {

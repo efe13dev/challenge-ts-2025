@@ -1,8 +1,9 @@
-import { describe, expect, it } from 'bun:test';
-import { splitTheBill } from './splitTheBill.ts';
+import { describe, expect, it } from "bun:test";
 
-describe('splitTheBill', () => {
-  it('Ejemplo del README: 3 amigos con gastos diferentes', () => {
+import { splitTheBill } from "./splitTheBill.ts";
+
+describe("splitTheBill", () => {
+  it("Ejemplo del README: 3 amigos con gastos diferentes", () => {
     const grupo = {
       a: 20,
       b: 15,
@@ -18,7 +19,7 @@ describe('splitTheBill', () => {
     });
   });
 
-  it('Todos gastaron lo mismo, nadie debe pagar', () => {
+  it("Todos gastaron lo mismo, nadie debe pagar", () => {
     const grupo = {
       juan: 30,
       maria: 30,
@@ -36,7 +37,7 @@ describe('splitTheBill', () => {
     });
   });
 
-  it('Maneja correctamente valores decimales', () => {
+  it("Maneja correctamente valores decimales", () => {
     const grupo = {
       carlos: 45.75,
       sofia: 32.25,
@@ -56,7 +57,7 @@ describe('splitTheBill', () => {
     });
   });
 
-  it('Funciona con solo dos personas', () => {
+  it("Funciona con solo dos personas", () => {
     const grupo = {
       persona1: 100,
       persona2: 50,
@@ -71,7 +72,7 @@ describe('splitTheBill', () => {
     });
   });
 
-  it('Maneja el caso de muchas personas con gastos variados', () => {
+  it("Maneja el caso de muchas personas con gastos variados", () => {
     const grupo = {
       p1: 120,
       p2: 80,

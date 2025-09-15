@@ -9,7 +9,7 @@ export function timeCorrect(timestring: string | null): string | null {
     return null;
   }
 
-  let [hours, minutes, seconds] = timestring.split(':').map(Number);
+  let [hours, minutes, seconds] = timestring.split(":").map(Number);
 
   seconds += 0;
   minutes += Math.floor(seconds / 60);
@@ -18,8 +18,8 @@ export function timeCorrect(timestring: string | null): string | null {
   minutes %= 60;
   hours %= 24;
 
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
     2,
-    '0'
-  )}:${String(seconds).padStart(2, '0')}`;
+    "0",
+  )}:${String(seconds).padStart(2, "0")}`;
 }

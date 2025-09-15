@@ -13,6 +13,7 @@ export const lenCurve = (n: number): number => {
     const y1 = x1 * x1;
     const dx = x1 - x0;
     const dy = y1 - y0;
+
     length += Math.sqrt(dx * dx + dy * dy);
   }
 

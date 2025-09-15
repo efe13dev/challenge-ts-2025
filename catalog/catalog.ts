@@ -18,6 +18,7 @@ export function catalog(s: string, article: string): string {
       const name = nameMatch[1];
       const prx = prxMatch[1];
       const qty = qtyMatch[1];
+
       // Buscar coincidencia exacta o parcial del artículo
       if (name.includes(article)) {
         results.push(`${name} > prx: $${prx} qty: ${qty}`);
@@ -27,9 +28,9 @@ export function catalog(s: string, article: string): string {
 
   // Si no se encontraron resultados, devolver "Nothing"
   if (results.length === 0) {
-    return 'Nothing';
+    return "Nothing";
   }
 
   // Unir los resultados por salto de línea de Windows
-  return results.join('\r\n');
+  return results.join("\r\n");
 }

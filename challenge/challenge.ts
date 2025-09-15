@@ -1,3 +1,3 @@
 export function nerdify(txt: string): string {
-  return txt.replace(/a/gi, '4').replace(/e/gi, '3').replace(/l/gi, '1');
+  return txt.replace(/a/gi, "4").replace(/e/gi, "3").replace(/l/gi, "1");
 }

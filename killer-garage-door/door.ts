@@ -1,5 +1,5 @@
 // Tipos de estados
-type DoorState = 'CLOSED' | 'OPENING' | 'OPEN' | 'CLOSING';
+type DoorState = "CLOSED" | "OPENING" | "OPEN" | "CLOSING";
 
 // Interfaz para el estado de la puerta
 interface GarageDoorState {
@@ -13,31 +13,31 @@ interface GarageDoorState {
 const initialState = (): GarageDoorState => ({
   position: 0,
   direction: 1,
-  state: 'CLOSED',
+  state: "CLOSED",
   paused: false,
 });
 
 // Función para manejar el botón
 const handleButtonPress = (doorState: GarageDoorState): GarageDoorState => {
   switch (doorState.state) {
-    case 'CLOSED':
+    case "CLOSED":
       return {
         ...doorState,
-        state: 'OPENING',
+        state: "OPENING",
         direction: 1,
       };
-    case 'OPENING':
+    case "OPENING":
       return {
         ...doorState,
         paused: !doorState.paused,
       };
-    case 'OPEN':
+    case "OPEN":
       return {
         ...doorState,
-        state: 'CLOSING',
+        state: "CLOSING",
         direction: -1,
       };
-    case 'CLOSING':
+    case "CLOSING":
       return {
         ...doorState,
         paused: !doorState.paused,
@@ -48,21 +48,19 @@ const handleButtonPress = (doorState: GarageDoorState): GarageDoorState => {
 };
 
 // Función para manejar la detección de obstáculos
-const handleObstacleDetection = (
-  doorState: GarageDoorState,
-): GarageDoorState => {
+const handleObstacleDetection = (doorState: GarageDoorState): GarageDoorState => {
   switch (doorState.state) {
-    case 'OPENING':
+    case "OPENING":
       return {
         ...doorState,
-        state: 'CLOSING',
+        state: "CLOSING",
         direction: -1,
         paused: false,
       };
-    case 'CLOSING':
+    case "CLOSING":
       return {
         ...doorState,
-        state: 'OPENING',
+        state: "OPENING",
         direction: 1,
         paused: false,
       };
@@ -78,39 +76,43 @@ const updatePosition = (doorState: GarageDoorState): GarageDoorState => {
   }
 
   switch (doorState.state) {
-    case 'CLOSED':
+    case "CLOSED":
       return {
         ...doorState,
         position: 0,
       };
-    case 'OPENING': {
+    case "OPENING": {
       const newPosition = doorState.position + 1;
+
       if (newPosition === 5) {
         return {
           ...doorState,
           position: 5,
-          state: 'OPEN',
+          state: "OPEN",
         };
       }
+
       return {
         ...doorState,
         position: newPosition,
       };
     }
-    case 'OPEN':
+    case "OPEN":
       return {
         ...doorState,
         position: 5,
       };
-    case 'CLOSING': {
+    case "CLOSING": {
       const newPosition = doorState.position - 1;
+
       if (newPosition === 0) {
         return {
           ...doorState,
           position: 0,
-          state: 'CLOSED',
+          state: "CLOSED",
         };
       }
+
       return {
         ...doorState,
         position: newPosition,
@@ -124,13 +126,13 @@ const updatePosition = (doorState: GarageDoorState): GarageDoorState => {
 // Función principal que procesa los eventos
 export function door(input: string): string {
   let doorState = initialState();
-  let output = '';
+  let output = "";
   let lastPosition = -1; // Para rastrear la última posición
 
   for (const event of input) {
-    if (event === 'P') {
+    if (event === "P") {
       doorState = handleButtonPress(doorState);
-    } else if (event === 'O') {
+    } else if (event === "O") {
       doorState = handleObstacleDetection(doorState);
     }
 

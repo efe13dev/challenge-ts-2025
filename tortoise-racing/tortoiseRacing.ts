@@ -1,10 +1,7 @@
-export function race(
-  v1: number,
-  v2: number,
-  g: number,
-): [number, number, number] | null {
+export function race(v1: number, v2: number, g: number): [number, number, number] | null {
   const secondsInHour = 3600;
   const minutesInHour = 60;
+
   // Si v1 >= v2, B nunca alcanzará a A
   if (v1 >= v2) {
     return null;

@@ -8,14 +8,16 @@ export function wordToHex(words: string): string[] {
     // Tomar los primeros 3 caracteres
     const chars = word.slice(0, 3);
     // Obtener los códigos ASCII y convertirlos a hexadecimal
-    let hex = '';
+    let hex = "";
+
     for (let i = 0; i < 3; i++) {
       if (i < chars.length) {
-        hex += chars.charCodeAt(i).toString(16).padStart(2, '0');
+        hex += chars.charCodeAt(i).toString(16).padStart(2, "0");
       } else {
-        hex += '00';
+        hex += "00";
       }
     }
+
     return `#${hex}`;
   });
 }
