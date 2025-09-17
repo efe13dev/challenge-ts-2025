@@ -1,7 +1,6 @@
-// @bun
 import { describe, expect, test } from "bun:test";
 
-import { lenCurve } from "./lenCurve.js";
+import { lenCurve } from "./lenCurve.ts";
 
 describe("Tests para lenCurve", () => {
   // Test 1: n = 1 (debería ser la distancia entre (0,0) y (1,1))
